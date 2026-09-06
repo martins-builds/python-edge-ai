@@ -25,3 +25,11 @@ print(isHappy)
 print(naughty_list)
 
 say_hello('Martins')
+
+number = input('please provide a number >> ')
+
+try:
+    print(10 + int(number))
+
+except:
+    print('That is not a valid Number!')
