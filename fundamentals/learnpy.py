@@ -2,4 +2,6 @@ item = 'Banana'
 Item = 'Apple'
 Item_name = 'Orange'
 
-print
+print(item, Item)
+
+print('Hello ' + Item_name)
