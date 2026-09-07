@@ -6,7 +6,6 @@ while True:
     if user_input == '0':
         print('we are done')
         break
-        return True
 for i in range(3):
     print(i);
 
