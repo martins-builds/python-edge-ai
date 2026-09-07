@@ -4,9 +4,9 @@ def say_hello(name):
 while True:
     user_input = input("Enter something >> ")
     if user_input == '0':
-        print('we are done');
+        print('we are done')
         break
-
+        return True
 for i in range(3):
     print(i);
 
