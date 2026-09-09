@@ -29,3 +29,9 @@ z = {3, 5, 10, 11}
 print(z)
 z = {3*x for x in range(10) if x>5}
 print(z)
+
+#dict
+m = {'pork':25.3, 'beef':33.8, 'chicken':22.7}
+print(m.keys())
+print(m.values())
+print(m.items())
