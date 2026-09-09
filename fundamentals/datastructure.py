@@ -14,5 +14,11 @@ x.reverse()
 print(x)
 x.sort()
 print(x)
+x.reverse()
 
 #tuples
+y = tuple(x)
+print(y)
+y = ([1,2],3)
+del(y[0][0])
+print(y)
