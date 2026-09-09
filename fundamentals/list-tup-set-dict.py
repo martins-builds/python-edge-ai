@@ -7,3 +7,5 @@ print(x)
 
 del(x[1])
 print(x)
+x.pop()
+print(x)
