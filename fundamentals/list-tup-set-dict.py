@@ -4,3 +4,6 @@ print(x)
 
 x = [m for m in range (8)]
 print(x)
+
+del(x[1])
+print(x)
