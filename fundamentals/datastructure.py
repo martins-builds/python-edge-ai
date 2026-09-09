@@ -22,3 +22,10 @@ print(y)
 y = ([1,2],3)
 del(y[0][0])
 print(y)
+
+#sets
+z = set()
+z = {3, 5, 10, 11}
+print(z)
+z = {3*x for x in range(10) if x>5}
+print(z)
