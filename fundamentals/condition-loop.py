@@ -26,11 +26,11 @@ for i in range (10):
 print(largest)
 
 #little test
-for i in range:
+for i in range(3):
     inp = input("Enter plant: ")
     if (inp == "Spathiphyllum"):
         print("Yes - Spathiphyllum is the best plant ever!")
     elif (inp == "spathiphyllum"):
         print("No, I want a big Spathiphyllum!")
     else:
-        print("Spathiphyllum! Not [input]!")
+        print("Spathiphyllum! Not", inp)
