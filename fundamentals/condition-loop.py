@@ -30,7 +30,7 @@ for i in range:
     inp = input("Enter plant: ")
     if (inp == "Spathiphyllum"):
         print("Yes - Spathiphyllum is the best plant ever!")
-    elif (inp = "spathiphyllum"):
+    elif (inp == "spathiphyllum"):
         print("No, I want a big Spathiphyllum!")
     else:
         print("Spathiphyllum! Not [input]!")
