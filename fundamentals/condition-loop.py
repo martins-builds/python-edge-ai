@@ -24,3 +24,13 @@ for i in range (10):
     if largest < x[i]:
         largest = x[i]
 print(largest)
+
+#little test
+for i in range:
+    inp = input("Enter plant: ")
+    if (inp == "Spathiphyllum"):
+        print("Yes - Spathiphyllum is the best plant ever!")
+    elif (inp = "spathiphyllum"):
+        print("No, I want a big Spathiphyllum!")
+    else:
+        print("Spathiphyllum! Not [input]!")
