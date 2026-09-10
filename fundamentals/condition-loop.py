@@ -1,3 +1,5 @@
-n=100
+n=int(input("Enter a number: "))
 if n >= 100:
-    print(n)
+    print(bool(n))
+else:
+    print(bool(n))
