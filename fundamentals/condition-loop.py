@@ -34,3 +34,10 @@ for i in range(3):
         print("No, I want a big Spathiphyllum!")
     else:
         print("Spathiphyllum! Not", inp)
+
+        import time
+
+for i in range(1, 6):
+    print(i, "missisipi")
+    time.sleep(1)
+print("Ready or not, here I come!")
