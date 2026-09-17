@@ -59,5 +59,4 @@ list_2 = list_1[:] #not copying the memory
 list_1[0] = 2
 print(list_2)
 
-
-
+nd = [[0 for row in range(8)] for col in range(8)]
