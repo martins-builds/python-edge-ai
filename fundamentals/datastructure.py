@@ -54,4 +54,10 @@ while swapped:
 print("\nSorted:")
 print(my_list)
 
+list_1 = [1]
+list_2 = list_1[:] #not copying the memory
+list_1[0] = 2
+print(list_2)
+
+
 
