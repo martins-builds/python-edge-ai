@@ -1,6 +1,16 @@
 def message():
     print("Enter a value: ")
 
+def is_year_leap(year):
+    if year % 4 != 0:
+        return False
+    elif year % 100 != 0:
+        return True
+    elif year % 400 != 0:
+        return False
+    else:
+        return True
+    
 def subtra(a, b):
     print(a - b)
 
