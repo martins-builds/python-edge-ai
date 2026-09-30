@@ -26,3 +26,4 @@ message()
 
 subtra(5, 2)
 subtra(2, 5)
+subtra(2, 4)
