@@ -17,7 +17,7 @@ print(x)
 x.reverse()
 
 #tuples
-y = tuple(x)
+y = tuple(x) #learn tuples well
 print(y)
 y = ([1,2],3)
 del(y[0][0])
