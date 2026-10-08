@@ -60,3 +60,12 @@ list_1[0] = 2
 print(list_2)
 
 nd = [[0 for row in range(8)] for col in range(8)]
+dictionary = {"cat": "chat", "dog": "chien", "horse": "cheval"}
+words = ['cat', 'lion', 'horse']
+
+for word in words:
+    if word in dictionary:
+        print(word, "->", dictionary[word])
+    else:
+        print(word, "is not in dictionary")
+
