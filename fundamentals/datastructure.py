@@ -68,4 +68,4 @@ for word in words:
         print(word, "->", dictionary[word])
     else:
         print(word, "is not in dictionary")
-
+#works
