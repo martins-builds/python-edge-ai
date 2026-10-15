@@ -2,7 +2,6 @@ import csv
 
 min_lat, max_lat = float('inf'), float('-inf')
 min_lon, max_lon = float('inf'), float('-inf')
-sn = 1
 
 with open("gps_log_2026-10-08.txt", "r") as file, open("gps_data.csv", mode="w", newline="") as csv_file:
     writer = csv.writer(csv_file)
@@ -51,10 +50,9 @@ with open("data_validity.csv", mode="+a", newline="") as vFile:
     writer = csv.writer(vFile)
     vFile.seek(0, 2)
     if vFile.tell() == 0:
-        writer.writerow(["S/N", "Total lines", "Valid lines", "Corrupted lines"])
+        writer.writerow(["Total lines", "Valid lines", "Corrupted lines"])
     corrupted_lines = total_lines - valid_lines
-    writer.writerow([sn, total_lines, valid_lines, corrupted_lines])
-    sn += 1
+    writer.writerow([total_lines, valid_lines, corrupted_lines])
 
 print(f"Successfully processed {count} records.")
 if valid_lines > 0:
