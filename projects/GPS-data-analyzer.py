@@ -5,12 +5,17 @@ with open("gps_log_2026-10-08.txt", "r") as file, open("gps_data.csv", mode="w",
     writer.writerow(["time_str", "decimal_degrees", "decimal_longitude"])
 
     count = 0
+    total_lines = 0
+    valid_lines = 0
+    corrupted_lines = 0
     for line in file:
+        total_lines += 1
         clean_line = line.strip()
         if clean_line.startswith("$GPRMC"):
             fields = clean_line.split(",")
             if len(fields) < 7 or fields[2] == "V":
                 continue
+            valid_lines += 1
             time_str = fields[1]
             status_str = fields[2]
             latitude_str = fields[3]
@@ -32,4 +37,7 @@ with open("gps_log_2026-10-08.txt", "r") as file, open("gps_data.csv", mode="w",
 
             writer.writerow([time_str, decimal_degrees, decimal_longitude])
             count += 1
+    corrupted_lines = total_lines - valid_lines
+    writer.writerow(["Total lines", "Valid lines", "Corrupted lines"])
+    writer.writerow([total_lines, valid_lines, corrupted_lines])
 print(count)
