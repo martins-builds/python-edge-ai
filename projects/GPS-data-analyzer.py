@@ -25,6 +25,8 @@ with open("gps_log_2026-10-08.txt", "r") as file:
             if hemisphere2_str == "W":
                 decimal_longitude = -decimal_longitude
 
-            print(clean_line)
+            print(time_str)
+            print(decimal_degrees)
+            print(decimal_longitude)
             count = count + 1
 print(count)
