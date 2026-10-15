@@ -1,4 +1,9 @@
-with open("gps_log_2026-10-08.txt", "r") as file:
+import csv
+
+with open("gps_log_2026-10-08.txt", "r") as file, open("gps_data.csv", mode="w", newline="") as csv_file:
+    writer = csv.writer(csv_file)
+    writer.writerow(["time_str", "decimal_degrees", "decimal_longitude"])
+
     count = 0
     for line in file:
         clean_line = line.strip()
@@ -25,8 +30,6 @@ with open("gps_log_2026-10-08.txt", "r") as file:
             if hemisphere2_str == "W":
                 decimal_longitude = -decimal_longitude
 
-            print(time_str)
-            print(decimal_degrees)
-            print(decimal_longitude)
-            count = count + 1
+            writer.writerow([time_str, decimal_degrees, decimal_longitude])
+            count += 1
 print(count)
