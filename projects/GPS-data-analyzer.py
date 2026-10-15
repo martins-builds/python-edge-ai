@@ -16,6 +16,15 @@ with open("gps_log_2026-10-08.txt", "r") as file:
             degrees_str = latitude_str[:2]
             minutes_str = latitude_str[2:]
             decimal_degrees = float(degrees_str) + (float(minutes_str) / 60.0)
+            if hemisphere1_str == "S":
+                decimal_degrees = -decimal_degrees
+
+            degrees = float(longitude_str[:3])
+            minutes = float(longitude_str[3:])
+            decimal_longitude = degrees + (minutes / 60.0)
+            if hemisphere2_str == "W":
+                decimal_longitude = -decimal_longitude
+
             print(clean_line)
             count = count + 1
 print(count)
