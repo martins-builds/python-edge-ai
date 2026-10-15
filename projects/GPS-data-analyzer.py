@@ -37,7 +37,12 @@ with open("gps_log_2026-10-08.txt", "r") as file, open("gps_data.csv", mode="w",
 
             writer.writerow([time_str, decimal_degrees, decimal_longitude])
             count += 1
+
+with open("data_validity.csv", mode="+a", newline="") as vFile:
+    sn = 1
+    writer = csv.writer(vFile)
     corrupted_lines = total_lines - valid_lines
-    writer.writerow(["Total lines", "Valid lines", "Corrupted lines"])
-    writer.writerow([total_lines, valid_lines, corrupted_lines])
+    writer.writerow(["S/N", "Total lines", "Valid lines", "Corrupted lines"])
+    writer.writerow([sn, total_lines, valid_lines, corrupted_lines])
+    sn += 1
 print(count)
