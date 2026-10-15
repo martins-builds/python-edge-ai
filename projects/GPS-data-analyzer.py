@@ -3,6 +3,7 @@ with open("gps_log_2026-10-08.txt", "r") as file:
     for line in file:
         clean_line = line.strip()
         if clean_line.startswith("$GPRMC"):
+            fields = clean_line.split(",")
             print(clean_line)
             count = count + 1
 print(count)
