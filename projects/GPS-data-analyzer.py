@@ -12,6 +12,10 @@ with open("gps_log_2026-10-08.txt", "r") as file:
             hemisphere1_str = fields[4]
             longitude_str = fields[5]
             hemisphere2_str = fields[6]
+
+            degrees_str = latitude_str[:2]
+            minutes_str = latitude_str[2:]
+            decimal_degrees = float(degrees_str) + (float(minutes_str) / 60.0)
             print(clean_line)
             count = count + 1
 print(count)
