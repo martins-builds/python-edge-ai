@@ -46,6 +46,9 @@ with open("gps_log_2026-10-08.txt", "r") as file, open("gps_data.csv", mode="w",
             min_lon = min(min_lon, decimal_longitude)
             max_lon = max(max_lon, decimal_longitude)
 
+            lats.append(decimal_degrees)
+            lons.append(decimal_longitudee)
+
             writer.writerow([time_str, decimal_degrees, decimal_longitude])
             count += 1
 
@@ -63,3 +66,7 @@ if valid_lines > 0:
     print(f"Longitude bounds:  {min_lon:.6f} to {max_lon:.6f}")
 print(count)
 #implement plotting
+plt.scatter(lons, lats)
+plt.xlabel("Longitude")
+plt.ylabel("Latitude")
+plt.show()
