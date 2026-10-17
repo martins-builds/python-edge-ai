@@ -47,7 +47,7 @@ with open("gps_log_2026-10-08.txt", "r") as file, open("gps_data.csv", mode="w",
             max_lon = max(max_lon, decimal_longitude)
 
             lats.append(decimal_degrees)
-            lons.append(decimal_longitudee)
+            lons.append(decimal_longitude)
 
             writer.writerow([time_str, decimal_degrees, decimal_longitude])
             count += 1
