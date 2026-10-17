@@ -1,4 +1,5 @@
 import csv
+import matplotlib.pyplot as plt
 
 min_lat, max_lat = float('inf'), float('-inf')
 min_lon, max_lon = float('inf'), float('-inf')
