@@ -69,4 +69,4 @@ print(count)
 plt.scatter(lons, lats)
 plt.xlabel("Longitude")
 plt.ylabel("Latitude")
-plt.show()
+plt.show() #works
