@@ -1,5 +1,7 @@
 import argparse
 import logging
+import serial
+from receiver import read_frame
 
 log = logging.getLogger("record")
 
@@ -20,7 +22,17 @@ def main():
     )
     log.info("port=%s baud=%d label=%s", args.port, args.baud, args.label)
     log.debug("this only shows with --verbose")
-
+    with serial.Serial(args.port, args.baud, timeout=1.0) as port:
+        log.info("connected")
+        try:
+            while True:
+                sample = read_frame(port)
+                if sample is None:
+                    log.warning("no data for 1 s")
+                    continue
+                print(sample)
+        except KeyboardInterrupt:
+            log.info("stopped")
 
 if __name__ == "__main__":
     main()
