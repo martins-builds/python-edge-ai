@@ -29,3 +29,8 @@ def test_corrupted_checksum_rejected():
     frame[5] ^= 0xFF
     with pytest.raises(ValueError, match="bad checksum"):
         decode(bytes(frame))
+
+
+def test_out_of_range_rejected():
+    with pytest.raises(ValueError, match="out of range"):
+        encode(Sample(0, 40000, 0, 0, 0, 0, 0))
