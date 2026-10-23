@@ -23,7 +23,11 @@ def checksum(payload: bytes) -> int:
     return reduce(xor, payload, 0)
 
 def encode(sample: Sample) -> bytes:
-    payload = struct.pack(PAYLOAD_FMT, sample.timestamp_ms, sample.ax, sample.ay, sample.az, sample.gx, sample.gy, sample.gz)
+    try:
+        payload = struct.pack(PAYLOAD_FMT, sample.timestamp_ms, sample.ax, sample.ay,
+                              sample.az, sample.gx, sample.gy, sample.gz)
+    except struct.error as e:
+        raise ValueError(f"sample out of range: {sample}") from e
     return bytes([START]) + payload + bytes([checksum(payload)])
 
 def decode(frame: bytes) -> Sample:
