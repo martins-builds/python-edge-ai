@@ -25,3 +25,9 @@ def test_skips_garbage_before_frame(port):
 
 def test_empty_port_returns_none(port):
     assert read_frame(port) is None
+
+
+def test_truncated_frame_returns_none():
+    port.write(b"\x01\x02\x03\x04\x05\x06\x07\x08\x09\x10")
+    encode(SAMPLE)[:10]
+    assert read_frame(port) is None
