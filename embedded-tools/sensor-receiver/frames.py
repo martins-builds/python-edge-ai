@@ -19,6 +19,6 @@ class Sample:
     gz: int
 
 encode(sample: Sample) -> bytes
-ecode(frame: bytes) -> Sample
+decode(frame: bytes) -> Sample
 functools.reduce(operator.xor, payload)
 decode(encode(s)) == s
