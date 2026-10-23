@@ -52,28 +52,34 @@ def main():
     started = datetime.now()
     t0 = time.monotonic()
 
-    with serial.Serial(args.port, args.baud, timeout=1.0) as port, \
-            csv_path.open("w", newline="") as f:
+    with csv_path.open("w", newline="") as f:
         writer = csv.writer(f)
         writer.writerow([fld.name for fld in fields(Sample)])
         log.info("recording to %s", csv_path)
         try:
             while True:
-                sample = read_frame(port)
-                if sample is None:
-                    log.warning("no data for 1 s")
-                    continue
-                writer.writerow(astuple(sample))
-                count += 1
-                if args.plot:
-                    for name in history:
-                        history[name].append(getattr(sample, name))
-                    if count % 5 == 0:
-                        for name, line in lines.items():
-                            line.set_ydata(history[name])
-                        plt.pause(0.001)
-                if count % 100 == 0:
-                    log.info("%d samples", count)
+                try:
+                    with serial.Serial(args.port, args.baud, timeout=1.0) as port:
+                        log.info("connected to %s", args.port)
+                        while True:
+                            sample = read_frame(port)
+                            if sample is None:
+                                log.warning("no data for 1 s")
+                                continue
+                            writer.writerow(astuple(sample))
+                            count += 1
+                            if count % 100 == 0:
+                                log.info("%d samples", count)
+                            if args.plot:
+                                for name in history:
+                                    history[name].append(getattr(sample, name))
+                                if count % 5 == 0:
+                                    for name, line in lines.items():
+                                        line.set_ydata(history[name])
+                                    plt.pause(0.001)
+                except serial.SerialException as e:
+                    log.warning("port lost (%s), retrying in 2 s", e)
+                    time.sleep(2)
         except KeyboardInterrupt:
             log.info("stopped, %d samples saved", count)
 
