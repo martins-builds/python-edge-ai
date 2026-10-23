@@ -18,6 +18,14 @@ def test_short_frame_rejected():
 
 
 def test_bad_start_byte_rejected():
-    match="bad start byte"
+    frame = bytearray(encode(SAMPLE))
+    frame[0] = 0x55
+    with pytest.raises(ValueError, match="bad start byte"):
+        decode(bytes(frame))
+
+
 def test_corrupted_checksum_rejected():
-    match="bad checksum"
+    frame = bytearray(encode(SAMPLE))
+    frame[0] = 0x55
+    with pytest.raises(ValueError, match="bad checksum"):
+        decode(bytes(frame))
