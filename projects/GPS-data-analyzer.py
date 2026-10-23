@@ -64,7 +64,7 @@ print(f"Successfully processed {count} records.")
 if valid_lines > 0:
     print(f"Latitude bounds:   {min_lat:.6f} to {max_lat:.6f}")
     print(f"Longitude bounds:  {min_lon:.6f} to {max_lon:.6f}")
-print(count)
+
 #implement plotting
 plt.scatter(lons, lats)
 plt.xlabel("Longitude")
