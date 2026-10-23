@@ -1,5 +1,5 @@
 import csv
-import matplotlib.pyplot as ok
+import matplotlib.pyplot as plt
 
 lats = []
 lons = []
@@ -66,7 +66,7 @@ if valid_lines > 0:
     print(f"Longitude bounds:  {min_lon:.6f} to {max_lon:.6f}")
 
 #implement plotting
-ok.scatter(lons, lats)
-ok.xlabel("Longitude")
-ok.ylabel("Latitude")
-ok.show() #works
+plt.scatter(lons, lats)
+plt.xlabel("Longitude")
+plt.ylabel("Latitude")
+plt.show() #works
