@@ -26,6 +26,6 @@ def test_bad_start_byte_rejected():
 
 def test_corrupted_checksum_rejected():
     frame = bytearray(encode(SAMPLE))
-    frame[0] = 0x55
+    frame[5] ^= 0xFF
     with pytest.raises(ValueError, match="bad checksum"):
         decode(bytes(frame))
