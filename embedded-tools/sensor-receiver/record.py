@@ -1,3 +1,5 @@
+from collections import deque
+import matplotlib.pyplot as plt
 import argparse
 import logging
 import serial
@@ -20,6 +22,7 @@ def parse_args():
     parser.add_argument("--baud", type=int, default=115200)
     parser.add_argument("--label", required=True, help="activity label for this session")
     parser.add_argument("--verbose", action="store_true", help="show debug messages")
+    parser.add_argument("--plot", action="store_true", help="show a live plot of ax, ay, az")
     return parser.parse_args()
 
 
@@ -37,6 +40,15 @@ def main():
     csv_path = out_dir / f"{args.label}_{stamp}.csv"
     count = 0
 
+    N = 300
+    if args.plot:
+        plt.ion()
+        fig, axis = plt.subplots()
+        history = {name: deque([0] * N, maxlen=N) for name in ("ax", "ay", "az")}
+        lines = {name: axis.plot(range(N), history[name], label=name)[0] for name in history}
+        axis.set_ylim(-2000, 2000)
+        axis.legend(loc="upper right")
+
     started = datetime.now()
     t0 = time.monotonic()
 
@@ -53,11 +65,18 @@ def main():
                     continue
                 writer.writerow(astuple(sample))
                 count += 1
+                if args.plot:
+                    for name in history:
+                        history[name].append(getattr(sample, name))
+                    if count % 5 == 0:
+                        for name, line in lines.items():
+                            line.set_ydata(history[name])
+                        plt.pause(0.001)
                 if count % 100 == 0:
                     log.info("%d samples", count)
         except KeyboardInterrupt:
             log.info("stopped, %d samples saved", count)
-            
+
     duration = time.monotonic() - t0
     meta = {
         "label": args.label,
