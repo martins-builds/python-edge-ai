@@ -9,3 +9,8 @@ class Sample:
     gx: int
     gy: int
     gz: int
+
+encode(sample: Sample) -> bytes
+ecode(frame: bytes) -> Sample
+functools.reduce(operator.xor, payload)
+decode(encode(s)) == s
