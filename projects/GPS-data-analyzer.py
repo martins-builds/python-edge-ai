@@ -6,7 +6,7 @@ lons = []
 min_lat, max_lat = float('inf'), float('-inf')
 min_lon, max_lon = float('inf'), float('-inf')
 
-with open("gps_log_2026-10-08.txt", "r") as file, open("gps_data.csv", mode="w", newline="") as csv_file:
+with open("/Users/macbookpro/Documents/GitHub/python-edge-ai/projects/gps_log_2026-10-08.txt", "r") as file, open("/Users/macbookpro/Documents/GitHub/python-edge-ai/projects/gps_data.csv", mode="w", newline="") as csv_file:
     writer = csv.writer(csv_file)
     writer.writerow(["time_str", "decimal_degrees", "decimal_longitude"])
 
@@ -52,7 +52,7 @@ with open("gps_log_2026-10-08.txt", "r") as file, open("gps_data.csv", mode="w",
             writer.writerow([time_str, decimal_degrees, decimal_longitude])
             count += 1
 
-with open("data_validity.csv", mode="+a", newline="") as vFile:
+with open("/Users/macbookpro/Documents/GitHub/python-edge-ai/projects/data_validity.csv", mode="+a", newline="") as vFile:
     writer = csv.writer(vFile)
     vFile.seek(0, 2)
     if vFile.tell() == 0:
