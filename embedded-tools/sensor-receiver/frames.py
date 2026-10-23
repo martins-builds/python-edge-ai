@@ -1,4 +1,12 @@
 from dataclasses import dataclass
+import struct
+from functools import reduce
+from operator import xor
+
+START = 0xAA
+PAYLOAD_FMT = "<Ihhhhhh"
+PAYLOAD_SIZE = struct.calcsize(PAYLOAD_FMT)   # 16
+FRAME_SIZE = 1 + PAYLOAD_SIZE + 1             # 18
 
 @dataclass(frozen=True)
 class Sample:
