@@ -14,7 +14,12 @@ def parse_args():
 
 def main():
     args = parse_args()
-    print(args.port, args.baud, args.label)
+    logging.basicConfig(
+        level=logging.DEBUG if args.verbose else logging.INFO,
+        format="%(asctime)s %(levelname)s %(message)s",
+    )
+    log.info("port=%s baud=%d label=%s", args.port, args.baud, args.label)
+    log.debug("this only shows with --verbose")
 
 
 if __name__ == "__main__":
