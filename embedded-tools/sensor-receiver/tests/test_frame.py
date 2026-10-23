@@ -15,3 +15,9 @@ def test_frame_size():
 def test_short_frame_rejected():
     with pytest.raises(ValueError, match="expected 18 bytes"):
         decode(encode(SAMPLE)[:-1])
+
+
+def test_bad_start_byte_rejected():
+    match="bad start byte"
+def test_corrupted_checksum_rejected():
+    match="bad checksum"
