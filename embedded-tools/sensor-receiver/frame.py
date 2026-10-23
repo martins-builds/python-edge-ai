@@ -28,10 +28,10 @@ def encode(sample: Sample) -> bytes:
 
 def decode(frame: bytes) -> Sample:
     if len(frame) != FRAME_SIZE:
-        raise ValueError(f"expected {FRAME_SIZE} bytes, got {len(frame)}")                  # TODO: say what size you got
+        raise ValueError(f"expected {FRAME_SIZE} bytes, got {len(frame)}")
     if frame[0] != START:
-        raise ValueError(...)                  # TODO
-    payload = frame[1:-1]                      # skip the first and last byte
+        raise ValueError(f"bad start byte: expected 0x{START:02X}, got 0x{frame[0]:02X}")
+    payload = frame[1:-1]
     if checksum(payload) != frame[-1]:
-        raise ValueError(...)                  # TODO
+        raise ValueError(f"bad checksum: expected 0x{checksum(payload):02X}, got 0x{frame[-1]:02X}")
     return Sample(*struct.unpack(PAYLOAD_FMT, payload))
