@@ -1,6 +1,8 @@
 import argparse
 import logging
 import serial
+import json
+import time
 from receiver import read_frame
 
 import csv
@@ -35,6 +37,9 @@ def main():
     csv_path = out_dir / f"{args.label}_{stamp}.csv"
     count = 0
 
+    started = datetime.now()
+    t0 = time.monotonic()
+
     with serial.Serial(args.port, args.baud, timeout=1.0) as port, \
             csv_path.open("w", newline="") as f:
         writer = csv.writer(f)
@@ -52,6 +57,21 @@ def main():
                     log.info("%d samples", count)
         except KeyboardInterrupt:
             log.info("stopped, %d samples saved", count)
+            
+    duration = time.monotonic() - t0
+    meta = {
+        "label": args.label,
+        "port": args.port,
+        "baud": args.baud,
+        "started": started.isoformat(timespec="seconds"),
+        "duration_s": round(duration, 1),
+        "samples": count,
+        "measured_rate_hz": round(count / duration, 1) if duration > 0 else 0,
+        "csv": csv_path.name,
+    }
+    csv_path.with_suffix(".json").write_text(json.dumps(meta, indent=2))
+    log.info("metadata saved to %s", csv_path.with_suffix(".json"))
+
 
 if __name__ == "__main__":
     main()
