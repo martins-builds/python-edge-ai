@@ -16,7 +16,7 @@ f1, m1 = spectrum(fake, fs)
 print("synthetic peaks:", f1[np.argsort(m1)[-2:][::-1]])
 
 # 2) your real recording
-data = np.genfromtxt("YOUR_PATH.csv", delimiter=",", names=True)
+data = np.genfromtxt("embedded-tools/sensor-receiver/data/test_20261023_155613.csv", delimiter=",", names=True)
 f2, m2 = spectrum(data["ax"], fs)
 print("recording peak:", f2[np.argmax(m2)], "Hz, amplitude", m2.max())
 
