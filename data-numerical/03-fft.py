@@ -20,7 +20,9 @@ data = np.genfromtxt("embedded-tools/sensor-receiver/data/test_20261023_155613.c
 f2, m2 = spectrum(data["ax"], fs)
 print("recording peak:", f2[np.argmax(m2)], "Hz, amplitude", m2.max())
 
-plt.plot(f2, m2)
-plt.xlabel("Frequency (Hz)")
-plt.ylabel("Amplitude")
+f3, m3 = spectrum(data["ax"][:1000], fs)   # only the first 10 seconds
+plt.plot(f2, m2, label="full recording")
+plt.plot(f3, m3, label="first 1000 samples")
+plt.xlim(0, 3)                              # zoom in near the peak
+plt.legend()
 plt.show()
