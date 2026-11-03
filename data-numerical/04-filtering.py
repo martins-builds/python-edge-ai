@@ -15,7 +15,7 @@ clean = 999 * np.sin(2*np.pi*0.5*t)
 rng = np.random.default_rng(0)
 noisy = clean + 150*np.sin(2*np.pi*20*t) + rng.normal(0, 50, len(t))
 
-sos = signal.butter(4, 0.3, btype="low", fs=fs, output="sos")
+sos = signal.butter(4, 3, btype="low", fs=fs, output="sos")
 offline = signal.sosfiltfilt(sos, noisy)
 live = signal.sosfilt(sos, noisy)
 
