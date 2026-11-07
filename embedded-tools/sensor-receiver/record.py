@@ -100,4 +100,4 @@ def main():
 
 if __name__ == "__main__":
     main()
-    #working now.Would test on real board soon
+    #working now. Tested on real board
