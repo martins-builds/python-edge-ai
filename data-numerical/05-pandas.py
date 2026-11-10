@@ -1,4 +1,5 @@
 import pandas as pd
+from scipy import signal
 
 df = pd.read_csv("../embedded-tools/sensor-receiver/data/hw_test_20261107_090018.csv")
 
@@ -27,3 +28,8 @@ print("NaN count:", smooth.isna().sum())
 # 3) back to NumPy
 x = df["ax"].to_numpy()
 print(type(x), x.shape)
+#filter first, then downsample
+sos = signal.butter(4, 4, btype="low", fs=100, output="sos")
+filtered = signal.sosfiltfilt(sos, df["ax"].to_numpy())
+slow = filtered[::10]
+print("after filter and downsample:", len(slow), "samples")
