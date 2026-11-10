@@ -14,3 +14,16 @@ print("largest gap (ms):", gaps.max())
 df["t"] = pd.to_timedelta(df["timestamp_ms"] - df["timestamp_ms"].iloc[0], unit="ms")
 df = df.set_index("t")
 print(df.index[:3])
+# 1) one value per 100 ms (10 Hz): average the 10 samples in each bucket
+slow = df["ax"].resample("100ms").mean()
+print(len(df), "->", len(slow), "rows")
+print(slow.head())
+
+# 2) moving average over 5 samples, centred
+smooth = df["ax"].rolling(5, center=True).mean()
+print(smooth.head())
+print("NaN count:", smooth.isna().sum())
+
+# 3) back to NumPy
+x = df["ax"].to_numpy()
+print(type(x), x.shape)
