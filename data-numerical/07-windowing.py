@@ -8,7 +8,7 @@ fs = 100.0
 
 # testing leakage, with and without a Hann window
 t = np.arange(0, 10, 1/fs)
-s = np.sin(2*np.pi*0.55*t)                  # does NOT fit a whole number of cycles in 10 s
+s = np.sin(2*np.pi*0.5*t)                  # does NOT fit a whole number of cycles in 10 s
 N = len(s)
 f = np.fft.rfftfreq(N, d=1/fs)
 
@@ -35,7 +35,7 @@ HERE = Path(__file__).resolve().parent #easier thn os path
 CSV = HERE.parent / "embedded-tools" / "sensor-receiver" / "data" / "hw_test_20261107_090018.csv"
 x = pd.read_csv(CSV)["ax"].to_numpy().astype(float)
 
-Nw, hop = 250, 125
+Nw, hop = 250, 250
 windows = sliding_window_view(x, Nw)[::hop]
 print("windows:", windows.shape, "expected", (len(x) - Nw) // hop + 1)
 print("window start times (s):", (np.arange(len(windows)) * hop / fs)[:4])
