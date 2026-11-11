@@ -12,7 +12,8 @@ fs = 100.0
 t = (df["timestamp_ms"] - df["timestamp_ms"].iloc[0]).to_numpy() / 1000
 x = df["ax"].to_numpy().astype(float)
 
-sos = signal.butter(4, 1, btype="low", fs=fs, output="sos")
+cutoff = 1
+sos = signal.butter(4, cutoff, btype="low", fs=fs, output="sos")
 y = signal.sosfiltfilt(sos, x)
 
 freqs = np.fft.rfftfreq(len(x), d=1/fs)
@@ -21,7 +22,7 @@ mag = np.abs(np.fft.rfft(x - x.mean())) * 2 / len(x)
 fig, axs = plt.subplots(2, 1, figsize=(9, 6))
 
 axs[0].plot(t, x, label="raw")
-axs[0].plot(t, y, label="low-pass 4 Hz")
+axs[0].plot(t, y, label=f"low-pass {cutoff} Hz")
 axs[0].set_xlim(0, 6)
 axs[0].set_xlabel("Time (s)")
 axs[0].set_ylabel("ax (counts)")
