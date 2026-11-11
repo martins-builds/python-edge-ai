@@ -12,7 +12,7 @@ fs = 100.0
 t = (df["timestamp_ms"] - df["timestamp_ms"].iloc[0]).to_numpy() / 1000
 x = df["ax"].to_numpy().astype(float)
 
-sos = signal.butter(4, 4, btype="low", fs=fs, output="sos")
+sos = signal.butter(4, 1, btype="low", fs=fs, output="sos")
 y = signal.sosfiltfilt(sos, x)
 
 freqs = np.fft.rfftfreq(len(x), d=1/fs)
