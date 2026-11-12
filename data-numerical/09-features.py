@@ -41,3 +41,17 @@ quiet = np.full(250, 980.0)
 shaky = 980 + 100 * np.sin(2 * np.pi * 7 * np.arange(250) / fs)
 print({k: round(float(v), 1) for k, v in features(quiet).items()})
 print({k: round(float(v), 1) for k, v in features(shaky).items()})
+
+cols = ["ax", "ay", "az", "gx", "gy", "gz"]
+X = pd.read_csv(CSV)[cols].to_numpy().astype(float)
+
+rows = []
+for start in range(0, len(X) - N + 1, hop):
+    row = {"t_start_s": start / fs}
+    for c, name in enumerate(cols):
+        for k, v in features(X[start:start + N, c]).items():
+            row[f"{name}_{k}"] = v
+    rows.append(row)
+
+F = pd.DataFrame(rows)
+print(F.shape)
