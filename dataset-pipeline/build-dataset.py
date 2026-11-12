@@ -31,6 +31,41 @@ def windows_for_session(s, win, hop):
         yield start, W[start]
 
 
+def write_dataset_md(path, manifest, table, metas, sensor):
+    """Write a human-readable DATASET.md from the manifest (never goes stale)."""
+    c = manifest["config"]
+    rates = [m.get("measured_rate_hz") for m in metas.values() if m.get("measured_rate_hz")]
+    synthetic = any(m.get("synthetic") for m in metas.values())
+    lines = [f"# Dataset {manifest['dataset_id']}", ""]
+    if synthetic:
+        lines += ["> WARNING: contains synthetic sessions. Do not use for real results.", ""]
+    lines += [
+        "| Item | Value |", "|------|-------|",
+        f"| Sensor | {sensor} |",
+        f"| Channels | {', '.join(manifest['channels'])} |",
+        f"| Nominal sample rate | {c['fs']:g} Hz |",
+        f"| Measured rate (mean of sessions) | {sum(rates) / len(rates):.1f} Hz |" if rates else "| Measured rate | n/a |",
+        f"| Window | {c['win']} samples ({c['win'] / c['fs']:g} s) |",
+        f"| Overlap | {100 * (1 - c['hop'] / c['win']):.0f}% (hop {c['hop']} samples) |",
+        f"| Features per window | {manifest['n_features']} |",
+        f"| Split seed | {c['seed']} |",
+        f"| Sessions | {len(manifest['splits'])} |",
+        f"| Windows | {len(table)} |",
+        "", "## Windows per split and class", "",
+    ]
+    counts = table.groupby(["split", "label"]).size().unstack(fill_value=0)
+    counts = counts.reindex(["train", "val", "test"])
+    lines += ["| split | " + " | ".join(counts.columns) + " |",
+              "|-------|" + "|".join("---" for _ in counts.columns) + "|"]
+    for split, row in counts.iterrows():
+        lines.append(f"| {split} | " + " | ".join(str(v) for v in row) + " |")
+    lines += ["", "## Sessions", "", "| session | label | split |", "|---------|-------|-------|"]
+    for name, split in sorted(manifest["splits"].items()):
+        lines.append(f"| {name} | {metas[name]['label']} | {split} |")
+    lines += ["", "Normalisation: z-score per feature, using training windows only (see `scaler.json`).", ""]
+    Path(path).write_text("\n".join(lines))
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--raw", default="raw")
@@ -39,6 +74,7 @@ def main():
     ap.add_argument("--win", type=int, default=250)
     ap.add_argument("--hop", type=int, default=125)
     ap.add_argument("--seed", type=int, default=0)
+    ap.add_argument("--sensor", default="not specified")
     a = ap.parse_args()
 
     csvs = sorted(Path(a.raw).glob("*.csv"))
@@ -46,8 +82,10 @@ def main():
         raise SystemExit(f"no CSV files in {a.raw}")
 
     rows = []
+    metas = {}
     for path in csvs:
         s = load_session(path)
+        metas[s["name"]] = s["meta"]
         n_before = len(rows)
         for start, w in windows_for_session(s, a.win, a.hop):
             row = {"session": s["name"], "label": s["label"],
@@ -96,6 +134,7 @@ def main():
                     for s in ("train", "val", "test")},
     }
     (out / "manifest.json").write_text(json.dumps(manifest, indent=2))
+    write_dataset_md(out / "DATASET.md", manifest, table, metas, a.sensor)
 
     print()
     print("dataset id:", manifest["dataset_id"])
